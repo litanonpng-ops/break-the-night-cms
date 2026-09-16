@@ -51,6 +51,12 @@ production domains, or enable the game website's Cloudflare deployment workflow.
 Use GitHub sign-in for this preview. Email sign-in and invitations need a separately
 configured email provider and are not configured here.
 
+Vercel Authentication still protects the preview. With the account owner's approval,
+the GitHub App webhook URL includes a Vercel automation-bypass secret. It is stored
+only in Vercel and the private App configuration, not this repository. This bypass
+can reach all deployments in the project; do not share it. The webhook handler still
+requires GitHub's HMAC signature (unsigned requests return 401).
+
 Neon marketplace terms were approved by the account owner. No paid plan is
 authorized. Preview-only use does not itself determine Vercel plan
 eligibility; reassess the plan before a studio handoff or commercial use.
