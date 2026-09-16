@@ -154,9 +154,10 @@
             },
             {
               "name": "url",
-              "label": "URL (https://, /press/media/…, or mailto: for email)",
+              "label": "Contact (email, link, Discord handle, or other details)",
               "type": "string",
-              "required": true
+              "required": true,
+              "format": "contact"
             }
           ]
         },
@@ -176,6 +177,16 @@
               "type": "string",
               "pattern": "^[A-Za-z0-9_-]{11}$",
               "required": true
+            },
+            {
+              "name": "downloadUrl",
+              "label": "Video download link (optional)",
+              "type": "string"
+            },
+            {
+              "name": "downloadLabel",
+              "label": "Download link label (optional)",
+              "type": "string"
             }
           ]
         },

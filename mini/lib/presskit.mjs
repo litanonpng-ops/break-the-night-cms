@@ -11,6 +11,12 @@ function url(v) {
   throw new Error(`Unsupported URL: ${v}`);
 }
 const link = x => `<a href="${url(x.url)}">${esc(x.name)}</a>`;
+const contact = x => {
+  const value = String(x.url || '');
+  if (/^(https?:\/\/|mailto:|\/press\/media\/)/i.test(value)) return link({name:value.replace(/^mailto:/,''),url:value});
+  if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return link({name:value,url:'mailto:'+value});
+  return esc(value);
+};
 const facts = (label, value) => value ? `<p><strong>${label}:</strong><br>${value}</p>` : '';
 const imageGrid = items => `<div class="uk-grid images">${(items || []).map(x => `<div class="uk-width-medium-1-2"><a href="${url(x.src)}"><img src="${url(x.src)}" alt="${esc(x.alt)}" loading="lazy"></a></div>`).join('')}</div>`;
 
@@ -26,11 +32,13 @@ export function renderPresskit(d) {
   const section = (id, heading, body) => body ? `<hr><h2 id="${id}">${esc(heading)}</h2>${body}` : '';
   const videos = (d.videos || []).map(v => {
     if (!/^[\w-]{11}$/.test(v.youtube)) throw new Error('YouTube IDs must contain 11 letters, digits, dashes or underscores');
-    return `<p><strong>${esc(v.name)}</strong> <a href="https://www.youtube.com/watch?v=${v.youtube}">YouTube</a></p><div class="uk-responsive-width iframe-container"><iframe title="${esc(v.name)}" src="https://www.youtube-nocookie.com/embed/${v.youtube}" loading="lazy" style="border:0" allowfullscreen></iframe></div>`;
+    return `<p><strong>${esc(v.name)}</strong> <a href="https://www.youtube.com/watch?v=${v.youtube}">YouTube</a></p><div class="uk-responsive-width iframe-container"><iframe title="${esc(v.name)}" src="https://www.youtube-nocookie.com/embed/${v.youtube}" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" style="border:0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>${v.downloadUrl ? `<p class="video-download">${link({name:v.downloadLabel || 'Download video',url:v.downloadUrl})}</p>` : ''}`;
   }).join('');
   return `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(d.title)} — Press Kit</title><meta name="description" content="${esc(d.description)}">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Advent+Pro:wght@600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="canonical" href="https://breakthenight.com/press/">
 <link rel="icon" href="/assets/favicon.webp"><link rel="stylesheet" href="vendor/uikit.gradient.min.css"><link rel="stylesheet" href="vendor/style.css">
 </head><body><div class="uk-container uk-container-center"><div class="uk-grid">
@@ -50,7 +58,7 @@ ${section('logo','Logo & Icon',d.logos?.length ? imageGrid(d.logos) : '')}
 ${section('links','Additional Links', [...(d.downloads || []),...(d.links || [])].map(x=>`<p>${link(x)}</p>`).join(''))}
 ${section('about',`About ${d.developer}`,paragraphs(d.about))}
 <hr><div class="uk-grid"><div class="uk-width-medium-1-2">${d.credits?.length ? `<h2 id="credits">${esc(d.title)} Credits</h2>${d.credits.map(x=>`<p><strong>${esc(x.name)}</strong><br>${esc(x.role)}</p>`).join('')}` : ''}</div>
-<div class="uk-width-medium-1-2">${d.contacts?.length ? `<h2 id="contact">Contact</h2>${d.contacts.map(x=>`<p><strong>${esc(x.name)}</strong><br>${link({name:x.url.replace(/^mailto:/,''),url:x.url})}</p>`).join('')}` : ''}</div></div>
+<div class="uk-width-medium-1-2">${d.contacts?.length ? `<h2 id="contact">Contact</h2>${d.contacts.map(x=>`<p><strong>${esc(x.name)}</strong><br>${contact(x)}</p>`).join('')}` : ''}</div></div>
 <hr><p><a href="https://dopresskit.com/">presskit()</a> by Rami Ismail (<a href="https://www.vlambeer.com/">Vlambeer</a>) — also thanks to <a href="https://dopresskit.com/#credits">these fine folks</a>.</p>
 </div></div></div></body></html>`;
 }

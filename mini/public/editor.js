@@ -77,7 +77,7 @@ async function load() {
   $('login').hidden=true; $('editor').hidden=false; dirty=false;$('save').disabled=true;status('Ready.');
 }
 $('login').onsubmit=async e=>{e.preventDefault();const b=$('login').querySelector('button');b.disabled=true;try{await api('login',{password:e.target.password.value});e.target.reset();await load();}catch(e){status(e.message);}finally{b.disabled=false;}};
-$('content').onsubmit=async e=>{e.preventDefault();if(busy)return;busy=true;$('save').disabled=true;status('Saving to GitHub…');const snapshot=JSON.stringify(data);try{const result=await api('save',{data:JSON.parse(snapshot),sha});sha=result.sha;dirty=JSON.stringify(data)!==snapshot;status(dirty?'Saved. You have additional unsaved changes.':'Saved to GitHub. The presskit build will run; live deployment remains disabled.');}catch(e){status(e.message);}finally{busy=false;$('save').disabled=!dirty;}};
+$('content').onsubmit=async e=>{e.preventDefault();if(busy)return;busy=true;$('save').disabled=true;status('Saving…');const snapshot=JSON.stringify(data);try{const result=await api('save',{data:JSON.parse(snapshot),sha});sha=result.sha;dirty=JSON.stringify(data)!==snapshot;status(dirty?'Saved. You have additional unsaved changes.':'Changes saved.');}catch(e){status(e.message);}finally{busy=false;$('save').disabled=!dirty;}};
 $('logout').onclick=async()=>{if(dirty&&!confirm('Discard unsaved changes?'))return;try{await api('logout',{});dirty=false;location.reload();}catch(e){status(e.message);}};
 window.addEventListener('beforeunload',e=>{if(dirty||busy){e.preventDefault();e.returnValue='';}});
 load().catch(e=>status(e.message));

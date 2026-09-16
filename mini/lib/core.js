@@ -38,7 +38,7 @@ export function validate(data) {
       return Object.fromEntries(f.fields.map(child => [child.name, field(child, value[child.name] ?? '')]));
     }
     if (typeof value !== 'string' || value.length > 30000 || (f.required && !value.trim())) throw new Error(`Check ${f.label || f.name}`);
-    if (value && (f.type === 'image' || ['url','website','developerWebsite'].includes(f.name)) && !link(value)) throw new Error(`Invalid URL in ${f.name}`);
+    if (value && f.format !== 'contact' && (f.type === 'image' || ['url','website','developerWebsite','downloadUrl'].includes(f.name)) && !link(value)) throw new Error(`Invalid URL in ${f.name}`);
     if (value && f.pattern && !new RegExp(f.pattern).test(value)) throw new Error(`Invalid ${f.label || f.name}`);
     return value;
   }
