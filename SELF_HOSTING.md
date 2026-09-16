@@ -1,0 +1,66 @@
+# Self-hosting the presskit editor
+
+## What lives where
+
+- `break-the-night-cms` (this public fork): editor source, with no private content or credentials.
+- `litanonpng-ops/break-the-night-website` (private): website, `.pages.yml`, presskit JSON and images.
+- The editor commits content to the website repository. Its GitHub workflow builds the
+  public site. Cloudflare deployment remains disabled in that workflow.
+
+This fork does not use Pages CMS's hosted login, database or GitHub App. Installing
+the official Pages CMS App does not authorize this separate self-hosted application.
+
+## Requirements before this becomes the live editor
+
+1. A Next.js/Node-compatible application host and a PostgreSQL database. The website's
+   existing static-assets deployment cannot run this editor unchanged.
+2. A chosen editor URL (used consistently for `BASE_URL`, callbacks and webhooks).
+3. A separate GitHub App, installed on **only** `break-the-night-website`. Review the
+   requested permissions before installation. Use the upstream manifest helper below.
+4. Generated `BETTER_AUTH_SECRET` and `CRYPTO_KEY`, and the GitHub App credentials,
+   kept in the host's secret store or an ignored local `.env.local`.
+5. Optional email provider and a verified sender if email sign-in/invitations are needed.
+   The `example.com` sender in the sample is a placeholder, not a working email service.
+
+No hosting account, database, domain or GitHub App has been provisioned for this fork.
+No deployment or migration has been run against a real database.
+
+## Setup
+
+Use Node 22 or newer. Copy `.env.local.example` to `.env.local`, fill in actual values,
+and keep it out of Git. Leave it out of the public repository and website build.
+
+```sh
+npm ci
+npm run setup:github-app -- --base-url https://YOUR-EDITOR-URL --app-name "Presskit Editor"
+npm run db:migrate
+npm run dev
+```
+
+The helper requires GitHub approval and may write app credentials to your ignored env
+file. For local-only development, use `http://localhost:3000` consistently instead;
+webhook delivery requires a reachable endpoint. Follow the upstream development docs
+linked below for the database and GitHub App setup.
+
+For production, `npm run build` builds Next.js **and runs database migrations through
+the upstream postbuild script**. Run it only with the intended database configured,
+then `npm start`. Do not run this editor build in the game website's static build job.
+
+After login, open `litanonpng-ops/break-the-night-website`, branch `main`. The existing
+`.pages.yml` limits the editing form to the presskit and its own media folder. GitHub
+App permissions still apply to the whole selected repository; the form is not a
+security boundary.
+
+The current hosted editor can remain usable until this instance is configured and
+verified. Do not uninstall it or enable Cloudflare deployment as part of setup.
+
+## Maintenance
+
+Keep the upstream MIT license/copyright notice in distributed copies. User-facing
+branding is removed, not authorship or license notices. Track upstream security fixes.
+Authentication, authorization and repository access checks have not been bypassed.
+Provide your own legal/privacy information before offering this as a public service;
+the upstream hosted service's terms do not describe this private editor.
+
+- [Original repository](https://github.com/hunvreus/pagescms)
+- [Installation guide](https://pagescms.org/docs/guides/installing/)

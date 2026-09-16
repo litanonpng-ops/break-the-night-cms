@@ -1,4 +1,19 @@
-# Pages CMS
+# Presskit Editor — Break the Night fork
+
+A clean, neutral fork of Pages CMS for the Break the Night presskit. No upstream
+logos, green accents, template gallery, promotional About screen or hosted-service
+terms are shown in the editor. Functional warning/error colors remain for clarity.
+
+See [SELF_HOSTING.md](SELF_HOSTING.md) for setup and current status. This repository
+is the editor application, **not** the game website or its private content repository.
+It is not deployed. The existing hosted editor remains available during setup.
+
+The original MIT license and copyright notice are retained in [LICENSE](LICENSE).
+Original project documentation follows for reference.
+
+---
+
+# Upstream documentation
 
 [Pages CMS](https://pagescms.org) is an open source CMS for GitHub repositories. It is especially well suited for static sites and content-driven apps built with tools like Jekyll, Hugo, Next.js, Astro, VuePress, and similar stacks.
 

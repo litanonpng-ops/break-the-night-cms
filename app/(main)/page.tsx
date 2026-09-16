@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useUser } from "@/contexts/user-context";
 import { RepoSelect } from "@/components/repo/repo-select";
-import { RepoTemplates } from "@/components/repo/repo-templates";
 import { RepoLatest } from "@/components/repo/repo-latest";
 import { DocumentTitle } from "@/components/document-title";
 import { hasGithubIdentity } from "@/lib/authz-shared";
@@ -19,7 +18,6 @@ import { MainRootLayout } from "./main-root-layout";
 import { getVisits } from "@/lib/tracker";
 
 export default function Page() {
-  const [defaultAccount, setDefaultAccount] = useState<any>(null);
   const [hasRecentVisits, setHasRecentVisits] = useState(false);
   const { user } = useUser();
   const isGithubUser = hasGithubIdentity(user);
@@ -49,18 +47,8 @@ export default function Page() {
               <h2 className="text-lg font-medium tracking-tight">
                 Open a project
               </h2>
-              <RepoSelect
-                onAccountSelect={(account) => setDefaultAccount(account)}
-              />
+              <RepoSelect />
             </div>
-            {isGithubUser && (
-              <div className="space-y-4">
-                <h2 className="text-lg font-medium tracking-tight">
-                  Create from a template
-                </h2>
-                <RepoTemplates defaultAccount={defaultAccount} />
-              </div>
-            )}
           </div>
         ) : isGithubUser ? (
           <Empty className="absolute inset-0 border-0 rounded-none">

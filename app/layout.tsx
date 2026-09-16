@@ -16,14 +16,13 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
 });
 const appUrl = getBaseUrl();
-const socialImage = "/images/social-card.png";
-const description = "The No-Hassle CMS for GitHub";
+const description = "Edit Break the Night presskit content.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(appUrl),
   title: {
-    template: "%s | Pages CMS",
-    default: "Pages CMS",
+    template: "%s | Presskit Editor",
+    default: "Presskit Editor",
   },
   description,
   alternates: {
@@ -32,23 +31,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: appUrl,
-    siteName: "Pages CMS",
-    title: "Pages CMS",
+    siteName: "Presskit Editor",
+    title: "Presskit Editor",
     description,
-    images: [
-      {
-        url: socialImage,
-        width: 1200,
-        height: 630,
-        alt: "Pages CMS social card",
-      },
-    ],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Pages CMS",
+    card: "summary",
+    title: "Presskit Editor",
     description,
-    images: [socialImage],
   },
 };
 

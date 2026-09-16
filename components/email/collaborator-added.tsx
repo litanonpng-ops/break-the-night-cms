@@ -6,7 +6,6 @@ import {
   Head,
   Heading,
   Html,
-  Img,
   Link,
   Preview,
   Section,
@@ -28,17 +27,11 @@ export const CollaboratorAddedEmailTemplate = ({
   invitedByName: string;
   invitedByUrl: string;
 }) => {
-  const baseUrl = process.env.BASE_URL
-    ? process.env.BASE_URL
-    : process.env.VERCEL_PROJECT_PRODUCTION_URL
-      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-      : "";
-
   return (
     <Html>
       <Head />
       <Preview>
-        You were added to &quot;{repoName}&quot; on Pages CMS
+        You were added to &quot;{repoName}&quot; on Presskit Editor
       </Preview>
       <Tailwind>
         <Body
@@ -49,15 +42,6 @@ export const CollaboratorAddedEmailTemplate = ({
           }}
         >
           <Container className="my-[40px] mx-auto p-[20px] max-w-[465px]">
-            <Section className="mt-[24px]">
-              <Img
-                src={`${baseUrl}/images/email-logo.png`}
-                width="42"
-                height="42"
-                alt="Pages CMS"
-                className="my-0 mx-auto"
-              />
-            </Section>
             <Heading
               className="text-[24px] font-semibold p-0 my-[30px] mx-0 text-center tracking-tight"
               style={{ color: emailTheme.foreground }}
@@ -75,7 +59,7 @@ export const CollaboratorAddedEmailTemplate = ({
               >
                 {invitedByName}
               </Link>{" "}
-              added you to the &quot;{repoName}&quot; project on Pages CMS.
+              added you to the &quot;{repoName}&quot; project on Presskit Editor.
               You already have access, so there is nothing to accept.
             </Text>
             <Section className="text-center mt-[24px] mb-[24px]">
