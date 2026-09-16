@@ -43,7 +43,13 @@ production domains, or enable the game website's Cloudflare deployment workflow.
 - Keep Vercel deployment protection enabled. External GitHub callbacks/webhooks
   must be checked against that protection; do not disable it silently.
 - Deploy with `vercel deploy --target preview`, never `--prod`.
+- Point `breakthenight-cms-preview.vercel.app` at the resulting preview with
+  `vercel alias set <preview-deployment-url> breakthenight-cms-preview.vercel.app`.
+  Never reassign `breakthenightgame.vercel.app` to the CMS.
 - The linked `.vercel` metadata and local env files remain ignored by Git.
+
+Use GitHub sign-in for this preview. Email sign-in and invitations need a separately
+configured email provider and are not configured here.
 
 Neon marketplace terms were approved by the account owner. No paid plan is
 authorized. Preview-only use does not itself determine Vercel plan
@@ -83,6 +89,9 @@ verified. Do not uninstall it or enable Cloudflare deployment as part of setup.
 Keep the upstream MIT license/copyright notice in distributed copies. User-facing
 branding is removed, not authorship or license notices. Track upstream security fixes.
 Authentication, authorization and repository access checks have not been bypassed.
+The preview lockfile updates Next.js and Better Auth to remove the critical
+advisories found during setup. Other upstream dependency advisories remain; this
+is not a production security sign-off.
 Provide your own legal/privacy information before offering this as a public service;
 the upstream hosted service's terms do not describe this private editor.
 
