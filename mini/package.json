@@ -1,0 +1,7 @@
+{
+  "name": "break-the-night-presskit-editor",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node --test test.mjs" },
+  "engines": { "node": ">=22" }
+}

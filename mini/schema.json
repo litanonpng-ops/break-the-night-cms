@@ -1,0 +1,238 @@
+{
+  "media": {
+    "input": "website/press/media",
+    "output": "/press/media",
+    "extensions": [
+      "webp",
+      "png",
+      "jpg",
+      "jpeg",
+      "zip",
+      "pdf"
+    ],
+    "rename": "safe"
+  },
+  "content": [
+    {
+      "name": "presskit",
+      "label": "Break the Night — Press Kit",
+      "type": "file",
+      "path": "content/presskit.json",
+      "format": "json",
+      "fields": [
+        {
+          "name": "title",
+          "label": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "developer",
+          "label": "developer",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "developerWebsite",
+          "label": "Developer website",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "website",
+          "label": "website",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "basedIn",
+          "label": "Based in",
+          "type": "string"
+        },
+        {
+          "name": "releaseDate",
+          "label": "Release date (blank hides it)",
+          "type": "string"
+        },
+        {
+          "name": "price",
+          "label": "price",
+          "type": "string"
+        },
+        {
+          "name": "header",
+          "label": "Header image",
+          "type": "image"
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "history",
+          "type": "text",
+          "description": "Leave blank to hide this section."
+        },
+        {
+          "name": "about",
+          "type": "text",
+          "description": "Leave blank to hide this section."
+        },
+        {
+          "name": "features",
+          "type": "string",
+          "list": true
+        },
+        {
+          "name": "platforms",
+          "type": "object",
+          "list": true,
+          "fields": [
+            {
+              "name": "name",
+              "label": "Label",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "url",
+              "label": "URL (https://, /press/media/…, or mailto: for email)",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "downloads",
+          "type": "object",
+          "list": true,
+          "fields": [
+            {
+              "name": "name",
+              "label": "Label",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "url",
+              "label": "URL (https://, /press/media/…, or mailto: for email)",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "links",
+          "type": "object",
+          "list": true,
+          "fields": [
+            {
+              "name": "name",
+              "label": "Label",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "url",
+              "label": "URL (https://, /press/media/…, or mailto: for email)",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "contacts",
+          "type": "object",
+          "list": true,
+          "fields": [
+            {
+              "name": "name",
+              "label": "Label",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "url",
+              "label": "URL (https://, /press/media/…, or mailto: for email)",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "videos",
+          "type": "object",
+          "list": true,
+          "fields": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "youtube",
+              "label": "YouTube video ID",
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{11}$",
+              "required": true
+            }
+          ]
+        },
+        {
+          "name": "screenshots",
+          "type": "object",
+          "list": true,
+          "fields": [
+            {
+              "name": "src",
+              "label": "Image",
+              "type": "image",
+              "required": true
+            },
+            {
+              "name": "alt",
+              "label": "Image description",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "logos",
+          "type": "object",
+          "list": true,
+          "fields": [
+            {
+              "name": "src",
+              "label": "Image",
+              "type": "image",
+              "required": true
+            },
+            {
+              "name": "alt",
+              "label": "Image description",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "credits",
+          "type": "object",
+          "list": true,
+          "fields": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "role",
+              "type": "string",
+              "required": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

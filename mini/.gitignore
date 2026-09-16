@@ -1,0 +1,6 @@
+.env*
+.vercel
+PASSWORD.local.txt
+
+.vercel
+.env*
