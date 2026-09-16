@@ -98,7 +98,7 @@ export default async function handler(req, res) {
     }
     if (action === 'preview' && req.method === 'GET') {
       const { data } = await document();
-      const html = renderPresskit(data).replaceAll('href="vendor/', 'href="/press/vendor/').replace(/(?:src|href)="\/press\/media\/([^"/]+)"/g, (match, name) => match.slice(0, match.indexOf('=') + 1) + '"/api/cms?action=image&amp;name=' + encodeURIComponent(name) + '"');
+      const html = renderPresskit(data).replaceAll('href="/press/"', 'href="/api/cms?action=preview"').replaceAll('href="vendor/', 'href="/press/vendor/').replace(/(?:src|href)="\/press\/media\/([^"/]+)"/g, (match, name) => match.slice(0, match.indexOf('=') + 1) + '"/api/cms?action=image&amp;name=' + encodeURIComponent(name) + '"');
       res.setHeader('Content-Type', 'text/html; charset=utf-8');
       return res.status(200).send(html);
     }
