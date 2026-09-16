@@ -25,7 +25,6 @@ async function main() {
   const ownerType = args.ownerType === "org" ? "org" : "personal";
   const orgSlug = ownerType === "org" ? (args.org || "").trim() : "";
   const state = randomBytes(16).toString("hex");
-  const webhookSecret = randomBytes(32).toString("base64url");
 
   if (ownerType === "org" && !orgSlug) {
     throw new Error("Missing --org <slug> when --owner-type org.");
@@ -50,7 +49,7 @@ async function main() {
       checks: "read",
       statuses: "read",
       contents: "write",
-      email_addresses: "read",
+      emails: "read",
       metadata: "read",
     },
     default_events: [
@@ -69,7 +68,6 @@ async function main() {
     hook_attributes: {
       url: webhookUrl,
       active: true,
-      secret: webhookSecret,
     },
   };
 
@@ -88,6 +86,9 @@ async function main() {
   });
 
   const converted = await exchangeManifestCode(code);
+  if (!converted.webhook_secret) {
+    throw new Error("GitHub did not return the webhook signing secret.");
+  }
   const envPath = args.envPath ? resolve(process.cwd(), args.envPath) : "";
   const authSecret =
     process.env.BETTER_AUTH_SECRET ||
@@ -97,12 +98,13 @@ async function main() {
   const envValues = {
     BASE_URL: baseUrl,
     BETTER_AUTH_SECRET: authSecret,
+    CRYPTO_KEY: process.env.CRYPTO_KEY || randomBytes(32).toString("base64"),
     GITHUB_APP_ID: String(converted.id),
     GITHUB_APP_NAME: converted.slug,
     GITHUB_APP_CLIENT_ID: converted.client_id,
     GITHUB_APP_CLIENT_SECRET: converted.client_secret,
     GITHUB_APP_PRIVATE_KEY: wrapQuoted(escapeNewlines(converted.pem || "")),
-    GITHUB_APP_WEBHOOK_SECRET: webhookSecret,
+    GITHUB_APP_WEBHOOK_SECRET: converted.webhook_secret,
   };
 
   if (envPath) {

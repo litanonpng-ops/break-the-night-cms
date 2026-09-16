@@ -22,8 +22,32 @@ the official Pages CMS App does not authorize this separate self-hosted applicat
 5. Optional email provider and a verified sender if email sign-in/invitations are needed.
    The `example.com` sender in the sample is a placeholder, not a working email service.
 
-No hosting account, database, domain or GitHub App has been provisioned for this fork.
-No deployment or migration has been run against a real database.
+The local checkout is linked to the existing Vercel project `breakthenightgame`
+(`prj_U0GpnV4nji522pgrDqCZhI3VweMC`) in `litanonpng-ops-projects`. `vercel.json`
+selects the Next.js builder for this code without changing the website's source.
+The free Neon database `breakthenight-cms-preview` is provisioned and connected
+to Preview only. The private GitHub App `break-the-night-presskit-preview` is
+installed on only `break-the-night-website`; its credentials are stored in Vercel's
+Preview environment. The CMS uses the `cms-preview` branch and the stable preview
+URL `https://breakthenight-cms-preview.vercel.app`.
+
+## Development preview on the existing Vercel project
+
+Use the Preview environment only. Do not promote the CMS to Production, change
+production domains, or enable the game website's Cloudflare deployment workflow.
+
+- Provision a Neon `free_v3` database in `iad1`, with Neon Auth disabled (the app
+  already has its own authentication), connected to **Preview only**.
+- Set CMS secrets in Preview, not Production. Use a stable preview alias as
+  `BASE_URL` and for the GitHub App callbacks/webhook.
+- Keep Vercel deployment protection enabled. External GitHub callbacks/webhooks
+  must be checked against that protection; do not disable it silently.
+- Deploy with `vercel deploy --target preview`, never `--prod`.
+- The linked `.vercel` metadata and local env files remain ignored by Git.
+
+Neon marketplace terms were approved by the account owner. No paid plan is
+authorized. Preview-only use does not itself determine Vercel plan
+eligibility; reassess the plan before a studio handoff or commercial use.
 
 ## Setup
 
