@@ -36,3 +36,12 @@ step and no Neon or PostgreSQL connection. The original editor remains on the
 
 The UI has basic per-instance login throttling, not a distributed rate limiter.
 Use a strong password and rotate it if shared outside the intended team.
+
+The CMS alias is excluded from Vercel's extra account-login gate, so visitors use
+only the editor password. Other deployment URLs retain Vercel protection. Neon
+is disconnected and all database environment variables have been removed. The
+unused free database is retained as a rollback backup, not used by this editor.
+
+The former GitHub webhook bypass is revoked. Disabling the obsolete GitHub App
+webhook subscription itself requires the owner's GitHub identity confirmation;
+its old endpoint no longer exists in this editor and is not needed for saving.
